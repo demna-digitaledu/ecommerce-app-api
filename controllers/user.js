@@ -16,7 +16,7 @@ export const register = async (req, res) => {
       email,
     });
     if (emailExists.length) {
-      throw new Error("email already exists");
+      return res.status(500).json({ message: "This email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -74,7 +74,7 @@ export const login = async (req, res) => {
       return res.status(422).json({ message: "Password Or Email is invalid" });
     }
   } else {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "This user doesn't exist" });
   }
 };
 
@@ -84,7 +84,7 @@ export const getUserInfo = async (req, res) => {
     const user = await User.findOne({ _id: id });
     return res.json({ user, message: "user retrieved successfully" });
   } catch (error) {
-    return res.status(404).json({ message: "user not found", user: null });
+    return res.status(404).json({ message: "This user doesn't exist", user: null });
   }
 };
 
@@ -97,7 +97,7 @@ export const getUserCart = async (req, res) => {
       cart: user.cart,
     });
   } catch (error) {
-    res.json({ message: "error retrieving user cart", error });
+    res.json({ message: "There was error retrieving cart", error });
   }
 };
 
@@ -137,6 +137,6 @@ export const addToCart = async (req, res) => {
     const updatedUser = await User.findOne({ _id: id });
     res.json({ message: "cart updated successfully", cart: updatedUser.cart });
   } catch (error) {
-    res.status(400).json({ message: "error updating cart" });
+    res.status(400).json({ message: "There was error updating cart" });
   }
 };

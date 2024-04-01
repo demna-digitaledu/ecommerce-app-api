@@ -35,7 +35,7 @@ export const getMainProducts = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: "error getting home page products",
+      message: "There was error getting products",
       products: [],
       error,
     });
@@ -62,7 +62,7 @@ export const getProductsByCategory = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "error getting category products",
+      message: "There was error getting products",
       products: [],
       error,
     });
@@ -75,7 +75,7 @@ export const getProductById = async (req, res) => {
     const product = await Product.findById({ _id: id });
     return res.json({ message: "product retrieved successfully", product });
   } catch (error) {
-    res.status(404).json({ message: "error getting single product", error });
+    res.status(404).json({ message: "There was error getting product", error });
   }
 };
 
@@ -113,7 +113,7 @@ export const createProduct = async (req, res) => {
       .status(201)
       .json({ message: "Product saved successfully", product: savedProduct });
   } catch (error) {
-    return res.status(400).json({ message: "Bad request", error });
+    return res.status(400).json({ message: "The was error creating product", error });
   }
 };
 
@@ -141,7 +141,7 @@ export const updateProduct = async (req, res) => {
       product: updatedProduct,
     });
   } catch (error) {
-    return res.status(400).json({ message: "error updating product", error });
+    return res.status(400).json({ message: "There was error updating product", error });
   }
 };
 
@@ -188,6 +188,6 @@ export const deleteProduct = async (req, res) => {
         .json({ message: `Product with id of ${_id} does not exists` });
     }
   } catch (error) {
-    return res.status(500).json({ message: "error deleting product", error });
+    return res.status(500).json({ message: "There was error deleting product", error });
   }
 };
